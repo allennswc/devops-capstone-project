@@ -172,3 +172,22 @@ class TestAccountService(TestCase):
         resp = self.client.put(
             f"{BASE_URL}/0")
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
+
+
+    def test_delete_account(self):
+        """It should delete an account when given ID"""
+        # Make a test account and check if it got created
+        samp_account = self._create_accounts(1)[0]
+        response = self.client.delete(
+                f"{BASE_URL}/{samp_account.id}")
+
+        self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT)
+
+    def test_delete_account_not_found(self):
+        """It should not do anything when given wrong ID"""
+        # Make a test account and check if it got created
+        samp_account = self._create_accounts(1)[0]
+        response = self.client.delete(
+                f"{BASE_URL}/0")
+
+        self.assertEqual(response.status_code,status.HTTP_404_NOT_FOUND)

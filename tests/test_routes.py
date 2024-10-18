@@ -142,3 +142,33 @@ class TestAccountService(TestCase):
             f"{BASE_URL}/0")
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_update_account(self):
+        """It should update an account when given ID"""
+        # Make a test account and check if it got created
+        samp_account = AccountFactory()
+        response = self.client.post(
+                BASE_URL,
+                json=samp_account.serialize())
+        self.assertEqual(response.status_code,status.HTTP_201_CREATED)
+        
+        # Update account name and email information
+        samp2_accountinfo = response.get_json()
+        samp2_accountinfo['name'] = "Updated Name String"
+        samp2_accountinfo['email'] = "newemail@website.com"
+
+        # Push the change to the database
+        response2 = self.client.put(
+            f"{BASE_URL}/{samp2_accountinfo['id']}",
+            json=samp2_accountinfo)
+        
+        # Check if the information got changed
+        self.assertEqual(response2.status_code,status.HTTP_200_OK)
+        self.assertEqual(response2.get_json()['name'],"Updated Name String")
+        self.assertEqual(response2.get_json()['email'],"newemail@website.com")
+
+    def test_update_account_not_found(self):
+        """It should not update an unfound account """
+        account = self._create_accounts(1)[0]
+        resp = self.client.put(
+            f"{BASE_URL}/0")
+        self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)

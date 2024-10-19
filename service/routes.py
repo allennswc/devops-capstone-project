@@ -78,9 +78,8 @@ def list_accounts():
 # READ AN ACCOUNT
 ######################################################################
 
-# ... place you code here to READ an account ...
-@app.route("/accounts/<int:acc_id>", methods=["GET"])
 
+@app.route("/accounts/<int:acc_id>", methods=["GET"])
 def read_account(acc_id):
     # comment
     app.logger.info("Request to read an Account with id: %s", acc_id)
@@ -94,8 +93,8 @@ def read_account(acc_id):
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
 
-@app.route("/accounts/<int:acc_id>", methods=["PUT"])
 
+@app.route("/accounts/<int:acc_id>", methods=["PUT"])
 def update_account(acc_id):
     app.logger.info("Request to read an Account with id: %s", acc_id)
     acc = Account.find(acc_id)

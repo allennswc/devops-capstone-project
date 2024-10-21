@@ -178,7 +178,7 @@ class TestAccountService(TestCase):
     def test_delete_account(self):
         """It should delete an account when given ID"""
         # Make a test account and check if it got created
-        # samp_account = self._create_accounts(1)[0]
+        samp_account = self._create_accounts(1)[0]
         response = self.client.delete(
                 f"{BASE_URL}/{samp_account.id}")
 
@@ -187,7 +187,7 @@ class TestAccountService(TestCase):
     def test_delete_account_not_found(self):
         """It should not do anything when given wrong ID"""
         # Make a test account and check if it got created
-        samp_account = self._create_accounts(1)[0]
+        # samp_account = self._create_accounts(1)[0]
         response = self.client.delete(
                 f"{BASE_URL}/0")
 
